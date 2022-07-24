@@ -12,6 +12,10 @@ parserOptions:
   sourceType: module
 plugins:
   - react
-rules:
-  import/extensions: 0
+rules: {
+  react/jsx-filename-extension: [0, { "extensions": [".js", ".jsx"] }],
+  react/function-component-definition: 0,
+  import/no-unresolved: 0,
+  import/extensions: 0,
   no-console: 0
+}
