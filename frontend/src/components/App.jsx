@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -6,16 +6,28 @@ import {
 } from 'react-router-dom';
 
 import LoginPage from './LoginPage.jsx';
+import MainPage from './MainPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
-const App = () => (
-  <BrowserRouter>
+const App = () => {
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.token) {
+      setToken(user.token);
+    }
+  });
+  
+  return (
+    <BrowserRouter>
     <Routes>
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/" element={token ? <MainPage /> : <LoginPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </BrowserRouter>
-);
+  );
+};
 
 export default App;

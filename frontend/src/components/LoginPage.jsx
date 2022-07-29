@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
+
+import routes from '../routes.js';
 
 const validationSchema = Yup.object().shape({
   username: Yup
@@ -18,6 +21,7 @@ const validationSchema = Yup.object().shape({
 const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -29,10 +33,13 @@ const LoginPage = () => {
       password: '',
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       try {
         setAuthFailed(false);
-        console.log(values);
+        const response = await axios.post(routes.loginPath(), values);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        console.log(response.data);
+        navigate('/');
       } catch (err) {
         setAuthFailed(true);
         inputRef.current.select();
