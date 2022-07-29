@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -10,19 +10,17 @@ import MainPage from './MainPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
 const App = () => {
-  const [token, setToken] = useState('');
-
-  useEffect(() => {
+  const hasToken = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user.token) {
-      setToken(user.token);
-    }
-  });
+      return true;
+    } return false;
+  };
   
   return (
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={token ? <MainPage /> : <LoginPage />} />
+      <Route path="/" element={hasToken() ? <MainPage /> : <LoginPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
