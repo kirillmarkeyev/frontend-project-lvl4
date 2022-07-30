@@ -5,6 +5,7 @@ env:
 extends:
   - plugin:react/recommended
   - eslint:recommended
+  - react-app
 parserOptions:
   ecmaFeatures:
     jsx: true
@@ -14,6 +15,7 @@ plugins:
   - react
 rules: {
   react/jsx-filename-extension: [0, { "extensions": [".js", ".jsx"] }],
+  react/prop-types: 0,
   react/function-component-definition: 0,
   import/no-unresolved: 0,
   import/extensions: 0,
