@@ -55,18 +55,18 @@ const MainPageRoute = () => {
 };
 
 const App = () => {
-  
-  
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainPageRoute />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-    </BrowserRouter>
-  </AuthProvider>
+        <div className="d-flex flex-column h-100">
+          <Routes>
+            <Route path="/" element={<MainPageRoute />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 
