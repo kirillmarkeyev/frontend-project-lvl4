@@ -31,10 +31,8 @@ const AuthProvider = ({ children }) => {
   };
 
   const getAuthHeader = () => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-
-    if (userData && userData.token) {
-      return { Authorization: `Bearer ${userData.token}` };
+    if (currentUser && currentUser.token) {
+      return { Authorization: `Bearer ${currentUser.token}` };
     }
     return {};
   };
@@ -46,11 +44,11 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const MainPageRoute = () => {
+const MainPageRoute = ({ children }) => {
   const auth = useAuth();
 
   return (
-    auth.user ? <MainPage /> : <Navigate to="/login" />
+    auth.user ? children : <Navigate to="/login" />
   );
 };
 
@@ -60,7 +58,11 @@ const App = () => {
       <BrowserRouter>
         <div className="d-flex flex-column h-100">
           <Routes>
-            <Route path="/" element={<MainPageRoute />} />
+            <Route path="/" element={(
+              <MainPageRoute>
+                <MainPage />
+              </MainPageRoute>
+            )} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

@@ -17,6 +17,7 @@ rules: {
   react/jsx-filename-extension: [0, { "extensions": [".js", ".jsx"] }],
   react/prop-types: 0,
   react/function-component-definition: 0,
+  react-hooks/exhaustive-deps: 0,
   import/no-unresolved: 0,
   import/extensions: 0,
   no-console: 0
