@@ -1,24 +1,29 @@
 import React from 'react';
-
 import cn from 'classnames';
 
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { PlusSquare } from 'react-bootstrap-icons';
-
 import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
+import { actions as channelsActions } from '../slices/channelsSlice.js';
 
 const Channels = () => {
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
+  const dispatch = useDispatch();
+
   const channelsRender = () => {
+    const handleClick = (id) => {
+      dispatch(channelsActions.setCurrentChannelId(id));
+    };
+
     return (
       <ul className="nav flex-column nav-pills nav-fill px-2">
         {channels.map((channel) => (
           <li key={channel.id} className="nav-item w-100">
             <button
               type="button"
+              onClick={() => handleClick(channel.id)}
               className={cn('w-100', 'rounded-0', 'text-start', 'btn', {
                 'btn-secondary': channel.id === currentChannelId,
               })}
