@@ -18,7 +18,7 @@ const Messages = () => {
     console.log(message);
     setMessage('');
   };
-  
+
   const handleChange = (e) => {
     setMessage(e.target.value);
   };
@@ -26,10 +26,11 @@ const Messages = () => {
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = channels.find((channel) => channel.id === currentChannelId);
-  console.log(currentChannel);
+  // console.log(channels);
+  // console.log(currentChannelId);
 
   const messages = useSelector(messagesSelectors.selectAll);
-  console.log(messages);
+  // console.log(messages);
 
   return (
     <div className="col p-0 h-100">

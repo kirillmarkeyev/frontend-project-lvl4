@@ -6,7 +6,6 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-
 import LoginPage from './LoginPage.jsx';
 import MainPage from './MainPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
@@ -38,7 +37,12 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value ={{ user, logIn, logOut, getAuthHeader }}>
+    <AuthContext.Provider value ={{
+      user,
+      logIn,
+      logOut,
+      getAuthHeader,
+    }}>
       {children}
     </AuthContext.Provider>
   );
@@ -52,24 +56,22 @@ const MainPageRoute = ({ children }) => {
   );
 };
 
-const App = () => {
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <div className="d-flex flex-column h-100">
-          <Routes>
-            <Route path="/" element={(
-              <MainPageRoute>
-                <MainPage />
-              </MainPageRoute>
-            )} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
-  );
-};
+const App = () => (
+  <AuthProvider>
+    <BrowserRouter>
+      <div className="d-flex flex-column h-100">
+        <Routes>
+          <Route path="/" element={(
+            <MainPageRoute>
+              <MainPage />
+            </MainPageRoute>
+          )} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  </AuthProvider>
+);
 
 export default App;
