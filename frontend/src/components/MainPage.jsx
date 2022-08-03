@@ -20,7 +20,6 @@ const MainPage = () => {
     const fetchData = async () => {
       const response = await axios.get(routes.dataPath(), { headers: auth.getAuthHeader() });
 
-      console.log(response.data);
       const { channels, currentChannelId, messages } = response.data;
 
       dispatch(channelsActions.addChannels(channels));
