@@ -100,10 +100,10 @@ const LoginPage = () => {
                 <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
               </Form>
             </div>
-          </div>  
-        </div> 
+          </div>
+        </div>
       </div>
-    </div> 
+    </div>
   );
 };
 
