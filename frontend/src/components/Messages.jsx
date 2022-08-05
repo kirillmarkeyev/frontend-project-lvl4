@@ -12,6 +12,7 @@ import { actions as messagesActions } from '../slices/messagesSlice.js';
 const Messages = () => {
   const [message, setMessage] = useState('');
   const inputRef = useRef();
+  const lastMessageRef = useRef();
   const auth = useAuth();
   const dispatch = useDispatch();
 
@@ -26,6 +27,12 @@ const Messages = () => {
   useEffect(() => {
     inputRef.current.focus();
   });
+
+  useEffect(() => {
+    lastMessageRef.current.scrollIntoView({
+      behavior: 'smooth',
+    });
+  }, [currentMessages]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,8 +69,8 @@ const Messages = () => {
     return (
       currentMessages.map((message) => (
         <div key={message.id} className="text-break mb-2">
-            <b>{message.username}</b>: {message.body}
-          </div>
+          <b>{message.username}</b>: {message.body}
+        </div>
       ))
     );
   };
@@ -77,6 +84,7 @@ const Messages = () => {
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5 ">
           {messagesRender()}
+          <span ref={lastMessageRef}></span>
         </div>
         <div className="mt-auto px-5 py-3">
           <form onSubmit={handleSubmit} noValidate="" className="py-1 border rounded-2">
