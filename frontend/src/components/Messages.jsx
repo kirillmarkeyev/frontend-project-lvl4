@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 
 import useAuth from '../hooks/index.js';
-import { useSelector, useDispatch } from 'react-redux';
+
 import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
-import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
-import { actions as messagesActions } from '../slices/messagesSlice.js';
+import { selectors as messagesSelectors, actions as messagesActions } from '../slices/messagesSlice.js';
 
 const Messages = () => {
   const [message, setMessage] = useState('');
@@ -19,10 +19,11 @@ const Messages = () => {
   const socket = io();
 
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannel = useSelector((state) => channelsSelectors.selectById(state, currentChannelId));
+  const currentChannel = useSelector((state) => channelsSelectors
+    .selectById(state, currentChannelId));
 
   const messages = useSelector(messagesSelectors.selectAll);
-  const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
+  const currentMessages = messages.filter((m) => m.channelId === currentChannelId);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -54,7 +55,7 @@ const Messages = () => {
 
       socket.on('newMessage', (payload) => {
         dispatch(messagesActions.addMessage(payload));
-      }); 
+      });
     }
   };
 
@@ -67,14 +68,14 @@ const Messages = () => {
       return null;
     }
     return (
-      currentMessages.map((message) => (
-        <div key={message.id} className="text-break mb-2">
-          <b>{message.username}</b>: {message.body}
+      currentMessages.map((m) => (
+        <div key={m.id} className="text-break mb-2">
+          <b>{m.username}</b>: {m.body}
         </div>
       ))
     );
   };
-  
+
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
