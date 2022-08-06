@@ -3,21 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-import * as Yup from 'yup';
+import * as yup from 'yup';
 
 import useAuth from '../hooks/index.js';
 import routes from '../routes.js';
 
 import avatar from '../assets/avatar.jpg';
-
-const validationSchema = Yup.object().shape({
-  username: Yup
-    .string()
-    .required('Required'),
-  password: Yup
-    .string()
-    .required('Required'),
-});
 
 // https://ru.hexlet.io/challenges/js_react_auth_exercise
 
@@ -30,6 +21,17 @@ const LoginPage = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  const validationSchema = yup.object().shape({
+    username: yup
+      .string()
+      .trim()
+      .required('Обязательное поле'),
+    password: yup
+      .string()
+      .trim()
+      .required('Обязательное поле'),
+  });
 
   const formik = useFormik({
     initialValues: {
