@@ -18,6 +18,10 @@ const Messages = () => {
 
   const socket = io();
 
+  socket.on('newMessage', (payload) => {
+    dispatch(messagesActions.addMessage(payload));
+  });
+
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = useSelector((state) => channelsSelectors
     .selectById(state, currentChannelId));
@@ -52,10 +56,6 @@ const Messages = () => {
       // https://socket.io/docs/v4/emitting-events/#acknowledgements
 
       setMessage('');
-
-      socket.on('newMessage', (payload) => {
-        dispatch(messagesActions.addMessage(payload));
-      });
     }
   };
 
