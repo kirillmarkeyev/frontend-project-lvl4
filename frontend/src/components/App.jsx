@@ -10,8 +10,8 @@ import LoginPage from './LoginPage.jsx';
 import MainPage from './MainPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
-import AuthContext from '../contexts/index.js';
-import useAuth from '../hooks/index.js';
+import { AuthContext } from '../contexts/index.js';
+import { useAuth } from '../hooks/index.js';
 
 // https://ru.hexlet.io/challenges/js_react_auth_exercise
 

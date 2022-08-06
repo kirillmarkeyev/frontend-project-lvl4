@@ -1,26 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
-import io from 'socket.io-client';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 
-import useAuth from '../hooks/index.js';
+import { useAuth, useSocket } from '../hooks/index.js';
 
 import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
-import { selectors as messagesSelectors, actions as messagesActions } from '../slices/messagesSlice.js';
+import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
 
 const Messages = () => {
   const [message, setMessage] = useState('');
   const inputRef = useRef();
   const lastMessageRef = useRef();
   const auth = useAuth();
-  const dispatch = useDispatch();
-
-  const socket = io();
-
-  socket.on('newMessage', (payload) => {
-    dispatch(messagesActions.addMessage(payload));
-  });
+  const chat = useSocket();
 
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = useSelector((state) => channelsSelectors
@@ -50,10 +43,7 @@ const Messages = () => {
         channelId,
         username,
       };
-      socket.emit('newMessage', data, (response) => {
-        console.log(response.status);
-      });
-      // https://socket.io/docs/v4/emitting-events/#acknowledgements
+      chat.addNewMessage(data);
 
       setMessage('');
     }
