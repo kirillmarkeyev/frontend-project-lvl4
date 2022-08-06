@@ -5,7 +5,6 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { Provider as StoreProvider } from 'react-redux';
 
 import LoginPage from './LoginPage.jsx';
 import MainPage from './MainPage.jsx';
@@ -13,7 +12,6 @@ import NotFoundPage from './NotFoundPage.jsx';
 
 import AuthContext from '../contexts/index.js';
 import useAuth from '../hooks/index.js';
-import store from '../slices/index.js';
 
 // https://ru.hexlet.io/challenges/js_react_auth_exercise
 
@@ -59,23 +57,21 @@ const MainPageRoute = ({ children }) => {
 };
 
 const App = () => (
-  <StoreProvider store={store}>
-    <AuthProvider>
-      <div className="d-flex flex-column h-100">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={(
-              <MainPageRoute>
-                <MainPage />
-              </MainPageRoute>
-            )} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </AuthProvider>
-  </StoreProvider>
+  <AuthProvider>
+    <div className="d-flex flex-column h-100">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={(
+            <MainPageRoute>
+              <MainPage />
+            </MainPageRoute>
+          )} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  </AuthProvider>
 );
 
 export default App;
