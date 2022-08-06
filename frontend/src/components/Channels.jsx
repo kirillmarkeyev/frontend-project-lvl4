@@ -37,16 +37,11 @@ const Channels = (props) => {
     );
   };
 
-  const handleAddChannel = () => {
-    console.log('Adding new channel');
-    showModal('adding');
-  };
-
   return (
     <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
         <span>Каналы</span>
-        <button onClick={handleAddChannel} type="button" className="p-0 text-primary btn btn-group-vertical">
+        <button onClick={() => showModal('adding')} type="button" className="p-0 text-primary btn btn-group-vertical">
           <PlusSquare />
           <span className="visually-hidden">+</span>
         </button>
