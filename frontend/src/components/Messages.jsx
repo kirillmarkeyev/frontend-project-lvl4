@@ -47,18 +47,16 @@ const Messages = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      if (values.body !== '') {
-        const { body } = values;
-        const channelId = currentChannelId;
-        const { username } = auth.user;
-        const data = {
-          body,
-          channelId,
-          username,
-        };
-        chat.addNewMessage(data);
-        formik.resetForm();
-      }
+      const { body } = values;
+      const channelId = currentChannelId;
+      const { username } = auth.user;
+      const data = {
+        body,
+        channelId,
+        username,
+      };
+      chat.addNewMessage(data);
+      formik.resetForm();
     },
   });
 
@@ -87,7 +85,7 @@ const Messages = () => {
           <span ref={lastMessageRef}></span>
         </div>
         <div className="mt-auto px-5 py-3">
-          <Form onSubmit={formik.handleSubmit} noValidate className="py-1 border rounded-2">
+          <Form onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
             <InputGroup>
               <Form.Control
                 onChange={formik.handleChange}
