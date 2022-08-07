@@ -15,7 +15,7 @@ const Add = (props) => {
   }, []);
 
   const channels = useSelector(channelsSelectors.selectAll);
-  
+
   const validationSchema = yup.object().shape({
     name: yup
       .string()
