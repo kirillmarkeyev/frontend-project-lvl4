@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { Col, Button, Nav } from 'react-bootstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { PlusSquare } from 'react-bootstrap-icons';
@@ -18,7 +19,7 @@ const Channels = (props) => {
     };
 
     return (
-      <ul className="nav flex-column nav-pills nav-fill px-2">
+      <Nav fill variant="pills" className="d-flex flex-column px-2" as="ul">
         {channels.map((channel) => (
           <li key={channel.id} className="nav-item w-100">
             <button
@@ -33,21 +34,21 @@ const Channels = (props) => {
             </button>
           </li>
         ))}
-      </ul>
+      </Nav>
     );
   };
 
   return (
-    <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
+    <Col className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
         <span>Каналы</span>
-        <button onClick={() => showModal('adding')} type="button" className="p-0 text-primary btn btn-group-vertical">
+        <Button onClick={() => showModal('adding')} variant="link" className="p-0 text-primary btn-group-vertical">
           <PlusSquare />
           <span className="visually-hidden">+</span>
-        </button>
+        </Button>
       </div>
       {channelsRender()}
-    </div>
+    </Col>
   );
 };
 
