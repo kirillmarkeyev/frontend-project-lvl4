@@ -1,6 +1,12 @@
 import React from 'react';
 import cn from 'classnames';
-import { Col, Button, Nav } from 'react-bootstrap';
+import {
+  Col,
+  Button,
+  Nav,
+  Dropdown,
+  ButtonGroup,
+} from 'react-bootstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { PlusSquare } from 'react-bootstrap-icons';
@@ -21,18 +27,51 @@ const Channels = (props) => {
     return (
       <Nav fill variant="pills" className="d-flex flex-column px-2" as="ul">
         {channels.map((channel) => (
-          <li key={channel.id} className="nav-item w-100">
-            <button
-              type="button"
-              onClick={() => handleClick(channel.id)}
-              className={cn('w-100', 'rounded-0', 'text-start', 'btn', {
-                'btn-secondary': channel.id === currentChannelId,
-              })}
-            >
-              <span className="me-1">#</span>
-              {channel.name}
-            </button>
-          </li>
+          <Nav.Item as="li" key={channel.id} className="w-100">
+            {channel.removable ? (
+              <Dropdown as={ButtonGroup} className="w-100">
+                <button
+                  type="button"
+                  onClick={() => handleClick(channel.id)}
+                  className={cn('w-100', 'rounded-0', 'text-start', 'text-truncate', 'btn', {
+                    'btn-secondary': channel.id === currentChannelId,
+                  })}
+                >
+                  <span className="me-1">#</span>
+                  {channel.name}
+                </button>
+
+                <Dropdown.Toggle
+                  split
+                  variant={channel.id === currentChannelId ? 'secondary' : 'light'}
+                  className="flex-grow-0 text-end"
+                >
+                  <span className="visually-hidden">Управление каналом</span>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => showModal('removing', channel.id)}>
+                    Удалить
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    Переименовать
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )
+              : (
+                <button
+                  type="button"
+                  onClick={() => handleClick(channel.id)}
+                  className={cn('w-100', 'rounded-0', 'text-start', 'text-truncate', 'btn', {
+                    'btn-secondary': channel.id === currentChannelId,
+                  })}
+                >
+                  <span className="me-1">#</span>
+                  {channel.name}
+                </button>
+              )}
+          </Nav.Item>
         ))}
       </Nav>
     );

@@ -15,11 +15,20 @@ import { actions as messagesActions } from '../slices/messagesSlice.js';
 
 const MainPage = () => {
   const [modalType, setModalType] = useState(null);
+  const [itemId, setItemId] = useState(null);
+
   const auth = useAuth();
   const dispatch = useDispatch();
 
-  const showModal = (type) => setModalType(type);
-  const hideModal = () => setModalType(null);
+  const showModal = (type, id = null) => {
+    setModalType(type);
+    setItemId(id);
+  };
+
+  const hideModal = () => {
+    setModalType(null);
+    setItemId(null);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,12 +43,12 @@ const MainPage = () => {
     fetchData();
   }, []);
 
-  const renderModal = (type, hide) => {
+  const renderModal = (type, hide, id) => {
     if (!type) {
       return null;
     }
     const Modal = getModal(type);
-    return <Modal onHide={hide} />;
+    return <Modal onHide={hide} id={id} />;
   };
 
   return (
@@ -48,7 +57,7 @@ const MainPage = () => {
         <Channels showModal={showModal} />
         <Messages />
       </Row>
-      {renderModal(modalType, hideModal)}
+      {renderModal(modalType, hideModal, itemId)}
     </Container>
   );
 };
