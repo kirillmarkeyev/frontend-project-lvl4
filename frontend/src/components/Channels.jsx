@@ -53,7 +53,7 @@ const Channels = (props) => {
                   <Dropdown.Item onClick={() => showModal('removing', channel.id)}>
                     Удалить
                   </Dropdown.Item>
-                  <Dropdown.Item>
+                  <Dropdown.Item onClick={() => showModal('renaming', channel.id)}>
                     Переименовать
                   </Dropdown.Item>
                 </Dropdown.Menu>
