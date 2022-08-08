@@ -5,7 +5,6 @@ import { useSocket } from '../../hooks/index.js';
 
 const Remove = (props) => {
   const { onHide, id } = props;
-  // console.log(id);
 
   const chat = useSocket();
 
