@@ -21,6 +21,7 @@ const channelsSlice = createSlice({
       const { id } = action.payload;
       channelsAdapter.removeOne(state, id);
     }),
+    changeChannelName: channelsAdapter.updateOne,
   },
 });
 

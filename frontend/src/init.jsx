@@ -57,11 +57,28 @@ const SocketProvider = ({ socket, children }) => {
     }
   });
 
+  const renameChannel = (id, name) => socket.emit('renameChannel', { id, name }, (response) => {
+    if (response.status !== 'ok') {
+      console.log(response.status);
+    }
+  });
+
+  socket.on('renameChannel', (payload) => {
+    const { name, id } = payload;
+    dispatch(channelsActions.changeChannelName({
+      id,
+      changes: {
+        name,
+      },
+    }));
+  });
+
   return (
     <SocketContext.Provider value={{
       addNewMessage,
       addNewChannel,
       removeChannel,
+      renameChannel,
     }}
     >
       {children}
