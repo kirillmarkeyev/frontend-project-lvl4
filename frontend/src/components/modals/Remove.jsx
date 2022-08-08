@@ -1,9 +1,18 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
+import { useSocket } from '../../hooks/index.js';
+
 const Remove = (props) => {
   const { onHide, id } = props;
-  console.log(id);
+  // console.log(id);
+
+  const chat = useSocket();
+
+  const handleRemove = (channelId) => {
+    chat.removeChannel(channelId);
+    onHide();
+  };
 
   return (
     <Modal show centered>
@@ -14,7 +23,7 @@ const Remove = (props) => {
         <p className="lead">Уверены?</p>
         <div className="d-flex justify-content-end">
           <Button className="me-2" variant="secondary" onClick={onHide}>Отменить</Button>
-          <Button type="submit" variant="danger">Удалить</Button>
+          <Button type="submit" variant="danger" onClick={() => handleRemove(id)}>Удалить</Button>
         </div>
       </Modal.Body>
     </Modal>
