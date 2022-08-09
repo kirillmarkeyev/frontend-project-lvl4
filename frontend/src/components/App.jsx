@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
+
 import React, { useState } from 'react';
 import {
   BrowserRouter,
@@ -6,6 +8,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 
+import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
 import MainPage from './MainPage.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
@@ -37,12 +40,13 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value ={{
+    <AuthContext.Provider value={{
       user,
       logIn,
       logOut,
       getAuthHeader,
-    }}>
+    }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -58,19 +62,23 @@ const MainPageRoute = ({ children }) => {
 
 const App = () => (
   <AuthProvider>
-    <div className="d-flex flex-column h-100">
-      <BrowserRouter>
+    <BrowserRouter>
+      <div className="d-flex flex-column h-100">
+        <Header />
         <Routes>
-          <Route path="/" element={(
-            <MainPageRoute>
-              <MainPage />
-            </MainPageRoute>
-          )} />
+          <Route
+            path="/"
+            element={(
+              <MainPageRoute>
+                <MainPage />
+              </MainPageRoute>
+          )}
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   </AuthProvider>
 );
 
