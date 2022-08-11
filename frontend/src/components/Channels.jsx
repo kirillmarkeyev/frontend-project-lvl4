@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { PlusSquare } from 'react-bootstrap-icons';
 import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice.js';
 
@@ -18,6 +19,7 @@ const Channels = (props) => {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const channelsRender = () => {
     const handleClick = (id) => {
@@ -46,15 +48,15 @@ const Channels = (props) => {
                   variant={channel.id === currentChannelId ? 'secondary' : 'light'}
                   className="flex-grow-0 text-end"
                 >
-                  <span className="visually-hidden">Управление каналом</span>
+                  <span className="visually-hidden">{t('channels.manage')}</span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => showModal('removing', channel.id)}>
-                    Удалить
+                    {t('channels.remove')}
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => showModal('renaming', channel.id)}>
-                    Переименовать
+                    {t('channels.rename')}
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -80,7 +82,7 @@ const Channels = (props) => {
   return (
     <Col className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-        <span>Каналы</span>
+        <span>{t('channels.main')}</span>
         <Button onClick={() => showModal('adding')} variant="link" className="p-0 text-primary btn-group-vertical">
           <PlusSquare />
           <span className="visually-hidden">+</span>

@@ -1,7 +1,10 @@
-export default {
+/* eslint-disable no-dupe-keys */
+
+const ru = {
   translation: {
     loading: 'Загрузка...',
     login: {
+      required: 'Обязательное поле',
       username: 'Ваш ник',
       password: 'Пароль',
       submit: 'Войти',
@@ -23,6 +26,49 @@ export default {
       submit: 'Зарегистрироваться',
       header: 'Регистрация',
     },
+    channels: {
+      main: 'Каналы',
+      manage: 'Управление каналом',
+      remove: 'Удалить',
+      rename: 'Переименовать',
+    },
+    messages: {
+      counter: {
+        key_zero: '{{count}} сообщений',
+        key_one: '{{count}} сообщение',
+        key_few: '{{count}} сообщения',
+        key_many: '{{count}} сообщений',
+      },
+      new: 'Новое сообщение',
+      input: 'Введите сообщение...',
+      send: 'Отправить',
+    },
+    modalAdd: {
+      channelConstraints: 'От 3 до 20 символов',
+      unique: 'Должно быть уникальным',
+      required: 'Обязательное поле',
+      addChannel: 'Добавить канал',
+      name: 'Имя канала',
+      cancel: 'Отменить',
+      send: 'Отправить',
+    },
+    modalRename: {
+      channelConstraints: 'От 3 до 20 символов',
+      unique: 'Должно быть уникальным',
+      required: 'Обязательное поле',
+      unique: 'Должно быть уникальным',
+      required: 'Обязательное поле',
+      renameChannel: 'Переименовать канал',
+      name: 'Имя канала',
+      cancel: 'Отменить',
+      send: 'Отправить',
+    },
+    modalRemove: {
+      removeChannel: 'Удалить канал',
+      confirm: 'Уверены?',
+      cancel: 'Отменить',
+      remove: 'Удалить',
+    },
     notFound: {
       header: 'Страница не найдена',
       message: 'Но вы можете перейти ',
@@ -38,3 +84,5 @@ export default {
     },
   },
 };
+
+export default ru;

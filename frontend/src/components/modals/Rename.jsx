@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { Modal, Form, Button } from 'react-bootstrap';
-
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Modal, Form, Button } from 'react-bootstrap';
 
 import { useSocket } from '../../hooks/index.js';
 import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
@@ -12,6 +12,7 @@ const Rename = (props) => {
   const { onHide, id } = props;
   const inputEl = useRef();
   const chat = useSocket();
+  const { t } = useTranslation();
 
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannel = channels.find((channel) => channel.id === id);
@@ -20,10 +21,10 @@ const Rename = (props) => {
     name: yup
       .string()
       .trim()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .notOneOf(channels.map((channel) => channel.name), 'Должно быть уникальным')
-      .required('Обязательное поле'),
+      .min(3, t('modalRename.channelConstraints'))
+      .max(20, t('modalRename.channelConstraints'))
+      .notOneOf(channels.map((channel) => channel.name), t('modalRename.unique'))
+      .required(t('modalRename.required')),
   });
 
   const formik = useFormik({
@@ -45,7 +46,7 @@ const Rename = (props) => {
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modalRename.renameChannel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -59,13 +60,13 @@ const Rename = (props) => {
             value={formik.values.name}
             isInvalid={formik.errors.name && formik.touched.name}
           />
-          <Form.Label htmlFor="name" className="visually-hidden">Имя канала</Form.Label>
+          <Form.Label htmlFor="name" className="visually-hidden">{t('modalRename.name')}</Form.Label>
           <Form.Control.Feedback type="invalid">
             {formik.errors.name}
           </Form.Control.Feedback>
           <div className="d-flex justify-content-end">
-            <Button className="me-2" variant="secondary" onClick={onHide}>Отменить</Button>
-            <Button type="submit" variant="primary">Отправить</Button>
+            <Button className="me-2" variant="secondary" onClick={onHide}>{t('modalRename.cancel')}</Button>
+            <Button type="submit" variant="primary">{t('modalRename.send')}</Button>
           </div>
         </Form>
       </Modal.Body>

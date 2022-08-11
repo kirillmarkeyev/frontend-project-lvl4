@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { Modal, Form, Button } from 'react-bootstrap';
 
 import { useSelector } from 'react-redux';
@@ -12,6 +13,7 @@ const Add = (props) => {
   const { onHide } = props;
   const inputEl = useRef();
   const chat = useSocket();
+  const { t } = useTranslation();
 
   useEffect(() => {
     inputEl.current.focus();
@@ -23,10 +25,10 @@ const Add = (props) => {
     name: yup
       .string()
       .trim()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .notOneOf(channels.map((channel) => channel.name), 'Должно быть уникальным')
-      .required('Обязательное поле'),
+      .min(3, t('modalAdd.channelConstraints'))
+      .max(20, t('modalAdd.channelConstraints'))
+      .notOneOf(channels.map((channel) => channel.name), t('modalAdd.unique'))
+      .required(t('modalAdd.required')),
   });
 
   const formik = useFormik({
@@ -43,7 +45,7 @@ const Add = (props) => {
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('modalAdd.addChannel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -57,13 +59,13 @@ const Add = (props) => {
             value={formik.values.name}
             isInvalid={formik.errors.name && formik.touched.name}
           />
-          <Form.Label htmlFor="name" className="visually-hidden">Имя канала</Form.Label>
+          <Form.Label htmlFor="name" className="visually-hidden">{t('modalAdd.name')}</Form.Label>
           <Form.Control.Feedback type="invalid">
             {formik.errors.name}
           </Form.Control.Feedback>
           <div className="d-flex justify-content-end">
-            <Button className="me-2" variant="secondary" onClick={onHide}>Отменить</Button>
-            <Button type="submit" variant="primary">Отправить</Button>
+            <Button className="me-2" variant="secondary" onClick={onHide}>{t('modalAdd.cancel')}</Button>
+            <Button type="submit" variant="primary">{t('modalAdd.send')}</Button>
           </div>
         </Form>
       </Modal.Body>
