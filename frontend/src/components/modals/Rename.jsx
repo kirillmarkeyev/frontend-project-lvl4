@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import leoProfanity from 'leo-profanity';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -34,8 +35,8 @@ const Rename = (props) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      const { name } = values;
-      chat.renameChannel(id, name);
+      const cleanedName = leoProfanity.clean(values.name);
+      chat.renameChannel({ id, name: cleanedName });
       toast.success(t('modalRename.success'));
       onHide();
     },

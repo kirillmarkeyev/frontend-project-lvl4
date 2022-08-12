@@ -62,7 +62,7 @@ const SocketProvider = ({ socket, children }) => {
     }
   });
 
-  const renameChannel = (id, name) => socket.emit('renameChannel', { id, name }, (response) => {
+  const renameChannel = (renamedChannel) => socket.emit('renameChannel', renamedChannel, (response) => {
     if (response.status !== 'ok') {
       console.log(response.status);
     }

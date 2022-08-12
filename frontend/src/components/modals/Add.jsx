@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as yup from 'yup';
+import leoProfanity from 'leo-profanity';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Modal, Form, Button } from 'react-bootstrap';
@@ -38,7 +39,8 @@ const Add = (props) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      chat.addNewChannel(values);
+      const cleanedName = leoProfanity.clean(values.name);
+      chat.addNewChannel({ name: cleanedName });
       toast.success(t('modalAdd.success'));
       onHide();
     },
