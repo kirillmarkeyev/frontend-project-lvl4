@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import { useSelector } from 'react-redux';
 
@@ -38,6 +39,7 @@ const Add = (props) => {
     validationSchema,
     onSubmit: (values) => {
       chat.addNewChannel(values);
+      toast.success(t('modalAdd.success'));
       onHide();
     },
   });

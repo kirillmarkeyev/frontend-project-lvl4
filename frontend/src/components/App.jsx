@@ -7,6 +7,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import Header from './Header.jsx';
 import LoginPage from './LoginPage.jsx';
@@ -80,6 +81,7 @@ const App = () => (
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
+      <ToastContainer />
     </BrowserRouter>
   </AuthProvider>
 );
