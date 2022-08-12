@@ -6,6 +6,7 @@ import {
   useDispatch,
   useSelector,
 } from 'react-redux';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
@@ -91,6 +92,13 @@ const SocketProvider = ({ socket, children }) => {
   );
 };
 
+const rollbarConfig = {
+  accessToken: '9eedeb0568154ea086db04e66f8d26e3',
+  environment: 'production',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+};
+
 const init = async (socket) => {
   const i18n = i18next.createInstance();
 
@@ -102,13 +110,17 @@ const init = async (socket) => {
     });
 
   const vdom = (
-    <StoreProvider store={store}>
-      <SocketProvider socket={socket}>
-        <I18nextProvider i18n={i18n}>
-          <App />
-        </I18nextProvider>
-      </SocketProvider>
-    </StoreProvider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <StoreProvider store={store}>
+          <SocketProvider socket={socket}>
+            <I18nextProvider i18n={i18n}>
+              <App />
+            </I18nextProvider>
+          </SocketProvider>
+        </StoreProvider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 
   return vdom;
