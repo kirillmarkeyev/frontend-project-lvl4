@@ -62,6 +62,14 @@ const MainPageRoute = ({ children }) => {
   );
 };
 
+const LoginSignupPageRoute = ({ children }) => {
+  const auth = useAuth();
+
+  return (
+    !auth.user ? children : <Navigate to="/" />
+  );
+};
+
 const App = () => (
   <AuthProvider>
     <BrowserRouter>
@@ -74,10 +82,24 @@ const App = () => (
               <MainPageRoute>
                 <MainPage />
               </MainPageRoute>
-          )}
+            )}
           />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<RegistrationPage />} />
+          <Route
+            path="/login"
+            element={(
+              <LoginSignupPageRoute>
+                <LoginPage />
+              </LoginSignupPageRoute>
+            )}
+          />
+          <Route
+            path="/signup"
+            element={(
+              <LoginSignupPageRoute>
+                <RegistrationPage />
+              </LoginSignupPageRoute>
+            )}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

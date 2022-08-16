@@ -8,6 +8,7 @@ import {
 } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
+import leoProfanity from 'leo-profanity';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 
@@ -108,6 +109,10 @@ const init = async (socket) => {
       resources,
       fallbackLng: 'ru',
     });
+
+  leoProfanity.clearList();
+  leoProfanity.add(leoProfanity.getDictionary('en'));
+  leoProfanity.add(leoProfanity.getDictionary('ru'));
 
   const vdom = (
     <RollbarProvider config={rollbarConfig}>

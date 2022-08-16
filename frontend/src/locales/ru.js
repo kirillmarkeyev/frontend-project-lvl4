@@ -25,6 +25,7 @@ const ru = {
       alreadyExists: 'Такой пользователь уже существует',
       submit: 'Зарегистрироваться',
       header: 'Регистрация',
+      hasAccount: 'Уже зарегистрированы?',
     },
     channels: {
       main: 'Каналы',
@@ -80,10 +81,6 @@ const ru = {
     errors: {
       network: 'Ошибка соединения',
       unknown: 'Неизвестная ошибка',
-    },
-    private: {
-      header: 'Скрытая страница!',
-      message: 'Авторизован пользователь: {{username}}',
     },
   },
 };

@@ -155,6 +155,13 @@ const RegistrationPage = () => {
                 <Button type="submit" variant="outline-primary" className="w-100">{t('signup.submit')}</Button>
               </Form>
             </div>
+            <div className="card-footer p-4">
+              <div className="text-center">
+                <span>{t('signup.hasAccount')}</span>
+                {' '}
+                <a href="/login">{t('login.header')}</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
