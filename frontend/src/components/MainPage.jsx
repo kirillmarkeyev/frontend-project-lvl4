@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
@@ -16,9 +17,11 @@ import { actions as messagesActions } from '../slices/messagesSlice.js';
 const MainPage = () => {
   const [modalType, setModalType] = useState(null);
   const [itemId, setItemId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const auth = useAuth();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const showModal = (type, id = null) => {
     setModalType(type);
@@ -39,6 +42,8 @@ const MainPage = () => {
       dispatch(channelsActions.addChannels(channels));
       dispatch(channelsActions.setCurrentChannelId(currentChannelId));
       dispatch(messagesActions.addMessages(messages));
+
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -51,15 +56,23 @@ const MainPage = () => {
     return <Modal onHide={hide} id={id} />;
   };
 
-  return (
-    <Container className="h-100 my-4 overflow-hidden rounded shadow">
-      <Row className="h-100 bg-white flex-md-row">
-        <Channels showModal={showModal} />
-        <Messages />
-      </Row>
-      {renderModal(modalType, hideModal, itemId)}
-    </Container>
-  );
+  return loading
+    ? (
+      <div className="h-100 d-flex justify-content-center align-items-center">
+        <Spinner animation="border" role="status" variant="primary">
+          <span className="visually-hidden">{t('loading')}</span>
+        </Spinner>
+      </div>
+    )
+    : (
+      <Container className="h-100 my-4 overflow-hidden rounded shadow">
+        <Row className="h-100 bg-white flex-md-row">
+          <Channels showModal={showModal} />
+          <Messages />
+        </Row>
+        {renderModal(modalType, hideModal, itemId)}
+      </Container>
+    );
 };
 
 export default MainPage;
