@@ -13,16 +13,14 @@ import { useAuth, useSocket } from '../hooks/index.js';
 import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
 import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
 
+import Message from './Message.jsx';
+
 const Messages = () => {
   const inputRef = useRef();
   const lastMessageRef = useRef();
   const auth = useAuth();
   const chat = useSocket();
   const { t } = useTranslation();
-
-  leoProfanity.clearList();
-  leoProfanity.add(leoProfanity.getDictionary('en'));
-  leoProfanity.add(leoProfanity.getDictionary('ru'));
 
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = useSelector((state) => channelsSelectors
@@ -72,14 +70,10 @@ const Messages = () => {
     if (currentMessages.length === 0) {
       return null;
     }
+
     return (
       currentMessages.map((m) => (
-        <div key={m.id} className="text-break mb-2">
-          <b>{m.username}</b>
-          :
-          {' '}
-          {m.body}
-        </div>
+        <Message key={m.id} content={m} />
       ))
     );
   };
@@ -89,11 +83,7 @@ const Messages = () => {
       <div className="d-flex flex-column h-100">
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
-            <b>
-              #
-              {' '}
-              {currentChannel?.name}
-            </b>
+            <b>{`# ${currentChannel?.name}`}</b>
           </p>
           <span className="text-muted">
             {t('messages.counter.key', { count: currentMessages.length })}
