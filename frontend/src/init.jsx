@@ -14,9 +14,11 @@ import resources from './locales/index.js';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
-  environment: process.env.NODE_ENV === 'production',
   captureUncaught: true,
   captureUnhandledRejections: true,
+  payload: {
+    environment: process.env.NODE_ENV === 'production',
+  },
 };
 
 const init = async (socket) => {
