@@ -12,8 +12,6 @@ import SocketProvider from './contexts/SocketProvider.jsx';
 
 import resources from './locales/index.js';
 
-console.log('env', process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN);
-
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
   captureUncaught: true,
@@ -22,8 +20,6 @@ const rollbarConfig = {
     environment: process.env.NODE_ENV,
   },
 };
-
-console.log('config', rollbarConfig);
 
 const init = async (socket) => {
   const i18n = i18next.createInstance();
