@@ -21,6 +21,8 @@ const rollbarConfig = {
   },
 };
 
+console.log(rollbarConfig);
+
 const init = async (socket) => {
   const i18n = i18next.createInstance();
 
