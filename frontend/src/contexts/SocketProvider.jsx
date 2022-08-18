@@ -1,17 +1,15 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { SocketContext } from './index.js';
 
 import { actions as messagesActions } from '../slices/messagesSlice.js';
-import { actions as channelsActions } from '../slices/channelsSlice';
+import { actions as channelsActions } from '../slices/channelsSlice.js';
 
 const SocketProvider = ({ socket, children }) => {
   const dispatch = useDispatch();
-
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
   const addNewMessage = (message) => socket.emit('newMessage', message, (response) => {
     if (response.status !== 'ok') {
@@ -44,11 +42,7 @@ const SocketProvider = ({ socket, children }) => {
 
   socket.on('removeChannel', (payload) => {
     dispatch(channelsActions.removeChannel(payload));
-    if (payload.id === currentChannelId) {
-      dispatch(channelsActions.setCurrentChannelId(1));
-    } else {
-      dispatch(channelsActions.setCurrentChannelId(currentChannelId));
-    }
+    dispatch(channelsActions.setDefaultChannelId(payload.id));
   });
 
   const renameChannel = (renamedChannel) => socket.emit('renameChannel', renamedChannel, (response) => {
