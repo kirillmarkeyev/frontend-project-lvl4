@@ -13,7 +13,7 @@ import SocketProvider from './contexts/SocketProvider.jsx';
 import resources from './locales/index.js';
 
 const rollbarConfig = {
-  accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
+  accessToken: process.env.REACT_APP_ACCESS_TOKEN,
   captureUncaught: true,
   captureUnhandledRejections: true,
   payload: {
