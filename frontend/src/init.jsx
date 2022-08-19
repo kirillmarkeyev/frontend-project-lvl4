@@ -10,6 +10,7 @@ import store from './slices/index.js';
 import App from './components/App.jsx';
 import SocketProvider from './contexts/SocketProvider.jsx';
 
+import initSocket from './initSocket.js';
 import resources from './locales/index.js';
 
 const rollbarConfig = {
@@ -21,7 +22,8 @@ const rollbarConfig = {
   },
 };
 
-const init = async (socket) => {
+const init = async () => {
+  const socket = initSocket();
   const i18n = i18next.createInstance();
 
   await i18n
