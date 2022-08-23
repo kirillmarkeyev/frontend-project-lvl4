@@ -38,7 +38,6 @@ const initSocket = () => {
 
   socket.on('removeChannel', (payload) => {
     store.dispatch(channelsActions.removeChannel(payload));
-    store.dispatch(channelsActions.setDefaultChannelId(payload.id));
   });
 
   const renameChannel = (renamedChannel) => socket.emit('renameChannel', renamedChannel, (response) => {

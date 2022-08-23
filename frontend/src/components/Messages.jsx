@@ -66,17 +66,11 @@ const Messages = () => {
     },
   });
 
-  const messagesRender = () => {
-    if (currentMessages.length === 0) {
-      return null;
-    }
-
-    return (
-      currentMessages.map((m) => (
-        <Message key={m.id} content={m} />
-      ))
-    );
-  };
+  const messagesRender = () => (
+    currentMessages.map((m) => (
+      <Message key={m.id} content={m} />
+    ))
+  );
 
   return (
     <div className="col p-0 h-100">

@@ -17,7 +17,9 @@ import { actions as messagesActions } from '../slices/messagesSlice.js';
 const MainPage = () => {
   const [modalType, setModalType] = useState(null);
   const [itemId, setItemId] = useState(null);
-  const [loading, setLoading] = useState(true);
+
+  // состояние показа спиннера во время загрузки
+  const [isSpinnerShown, setIsSpinnerShown] = useState(true);
 
   const auth = useAuth();
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ const MainPage = () => {
       dispatch(channelsActions.setCurrentChannelId(currentChannelId));
       dispatch(messagesActions.addMessages(messages));
 
-      setLoading(false);
+      setIsSpinnerShown(false);
     };
     fetchData();
   }, []);
@@ -56,7 +58,7 @@ const MainPage = () => {
     return <Modal onHide={hide} id={id} />;
   };
 
-  return loading
+  return isSpinnerShown
     ? (
       <div className="h-100 d-flex justify-content-center align-items-center">
         <Spinner animation="border" role="status" variant="primary">
