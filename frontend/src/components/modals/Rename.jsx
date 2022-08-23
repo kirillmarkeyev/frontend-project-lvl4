@@ -3,21 +3,23 @@ import leoProfanity from 'leo-profanity';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import { useSocket } from '../../hooks/index.js';
 import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
+import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
-const Rename = (props) => {
-  const { onHide, id } = props;
+const Rename = () => {
+  const dispatch = useDispatch();
   const inputEl = useRef();
   const chat = useSocket();
   const { t } = useTranslation();
 
+  const itemId = useSelector((state) => state.modals.itemId);
   const channels = useSelector(channelsSelectors.selectAll);
-  const currentChannel = channels.find((channel) => channel.id === id);
+  const currentChannel = channels.find((channel) => channel.id === itemId);
 
   const validationSchema = yup.object().shape({
     name: yup
@@ -36,9 +38,9 @@ const Rename = (props) => {
     validationSchema,
     onSubmit: (values) => {
       const cleanedName = leoProfanity.clean(values.name);
-      chat.renameChannel({ id, name: cleanedName });
+      chat.renameChannel({ id: itemId, name: cleanedName });
       toast.success(t('modalRename.success'));
-      onHide();
+      dispatch(modalsActions.hideModal());
     },
   });
 
@@ -48,7 +50,7 @@ const Rename = (props) => {
 
   return (
     <Modal show centered>
-      <Modal.Header closeButton onHide={onHide}>
+      <Modal.Header closeButton onHide={() => dispatch(modalsActions.hideModal())}>
         <Modal.Title>{t('modalRename.renameChannel')}</Modal.Title>
       </Modal.Header>
 
@@ -68,7 +70,13 @@ const Rename = (props) => {
             {formik.errors.name}
           </Form.Control.Feedback>
           <div className="d-flex justify-content-end">
-            <Button className="me-2" variant="secondary" onClick={onHide}>{t('modalRename.cancel')}</Button>
+            <Button
+              className="me-2"
+              variant="secondary"
+              onClick={() => dispatch(modalsActions.hideModal())}
+            >
+              {t('modalRename.cancel')}
+            </Button>
             <Button type="submit" variant="primary">{t('modalRename.send')}</Button>
           </div>
         </Form>

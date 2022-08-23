@@ -12,9 +12,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { PlusSquare } from 'react-bootstrap-icons';
 import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice.js';
+import { actions as modalsActions } from '../slices/modalsSlice.js';
 
-const Channels = (props) => {
-  const { showModal } = props;
+const Channels = () => {
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
@@ -52,10 +52,14 @@ const Channels = (props) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => showModal('removing', channel.id)}>
+                  <Dropdown.Item
+                    onClick={() => dispatch(modalsActions.showModal({ modalType: 'removing', itemId: channel.id }))}
+                  >
                     {t('channels.remove')}
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => showModal('renaming', channel.id)}>
+                  <Dropdown.Item
+                    onClick={() => dispatch(modalsActions.showModal({ modalType: 'renaming', itemId: channel.id }))}
+                  >
                     {t('channels.rename')}
                   </Dropdown.Item>
                 </Dropdown.Menu>
@@ -83,7 +87,11 @@ const Channels = (props) => {
     <Col className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
         <span>{t('channels.main')}</span>
-        <Button onClick={() => showModal('adding')} variant="link" className="p-0 text-primary btn-group-vertical">
+        <Button
+          onClick={() => dispatch(modalsActions.showModal({ modalType: 'adding', itemId: null }))}
+          variant="link"
+          className="p-0 text-primary btn-group-vertical"
+        >
           <PlusSquare />
           <span className="visually-hidden">+</span>
         </Button>
