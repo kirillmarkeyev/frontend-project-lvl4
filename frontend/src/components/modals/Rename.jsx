@@ -8,7 +8,8 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import { useSocket } from '../../hooks/index.js';
-import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
+
+import { getItemId, getAllChannels } from '../../slices/selectors.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
 const Rename = () => {
@@ -17,9 +18,9 @@ const Rename = () => {
   const chat = useSocket();
   const { t } = useTranslation();
 
-  const itemId = useSelector((state) => state.modals.itemId);
-  const channels = useSelector(channelsSelectors.selectAll);
-  const currentChannel = channels.find((channel) => channel.id === itemId);
+  const itemId = useSelector(getItemId);
+  const channels = useSelector(getAllChannels);
+  const renamedChannel = channels.find((channel) => channel.id === itemId);
 
   const validationSchema = yup.object().shape({
     name: yup
@@ -33,7 +34,7 @@ const Rename = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: currentChannel.name,
+      name: renamedChannel.name,
     },
     validationSchema,
     onSubmit: (values) => {

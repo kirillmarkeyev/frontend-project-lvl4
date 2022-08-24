@@ -9,7 +9,9 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useSocket } from '../../hooks/index.js';
-import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
+
+import { getAllChannels } from '../../slices/selectors.js';
+
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
 const Add = () => {
@@ -22,7 +24,7 @@ const Add = () => {
     inputEl.current.focus();
   }, []);
 
-  const channels = useSelector(channelsSelectors.selectAll);
+  const channels = useSelector(getAllChannels);
 
   const validationSchema = yup.object().shape({
     name: yup

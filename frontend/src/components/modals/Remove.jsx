@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useSocket } from '../../hooks/index.js';
+
+import { getItemId } from '../../slices/selectors.js';
+
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
 const Remove = () => {
@@ -12,7 +15,7 @@ const Remove = () => {
   const chat = useSocket();
   const { t } = useTranslation();
 
-  const itemId = useSelector((state) => state.modals.itemId);
+  const itemId = useSelector(getItemId);
 
   const handleRemove = (channelId) => {
     chat.removeChannel(channelId);
@@ -35,7 +38,13 @@ const Remove = () => {
           >
             {t('modalRemove.cancel')}
           </Button>
-          <Button type="submit" variant="danger" onClick={() => handleRemove(itemId)}>{t('modalRemove.remove')}</Button>
+          <Button
+            type="submit"
+            variant="danger"
+            onClick={() => handleRemove(itemId)}
+          >
+            {t('modalRemove.remove')}
+          </Button>
         </div>
       </Modal.Body>
     </Modal>

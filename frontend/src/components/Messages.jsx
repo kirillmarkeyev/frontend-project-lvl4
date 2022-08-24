@@ -10,8 +10,7 @@ import { ArrowRightSquare } from 'react-bootstrap-icons';
 
 import { useAuth, useSocket } from '../hooks/index.js';
 
-import { selectors as channelsSelectors } from '../slices/channelsSlice.js';
-import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
+import { getCurrentChannelId, getCurrentChannel, getAllMessages } from '../slices/selectors.js';
 
 import Message from './Message.jsx';
 
@@ -22,12 +21,11 @@ const Messages = () => {
   const chat = useSocket();
   const { t } = useTranslation();
 
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannel = useSelector((state) => channelsSelectors
-    .selectById(state, currentChannelId));
+  const currentChannelId = useSelector(getCurrentChannelId);
+  const currentChannel = useSelector(getCurrentChannel);
 
-  const messages = useSelector(messagesSelectors.selectAll);
-  const currentMessages = messages.filter((m) => m.channelId === currentChannelId);
+  const currentMessages = useSelector(getAllMessages)
+    .filter((m) => m.channelId === currentChannelId);
 
   useEffect(() => {
     inputRef.current.focus();

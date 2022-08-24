@@ -11,6 +11,8 @@ import { useAuth } from '../hooks/index.js';
 import routes from '../routes.js';
 import getModal from './modals/index.js';
 
+import { getModalType } from '../slices/selectors.js';
+
 import { actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as messagesActions } from '../slices/messagesSlice.js';
 
@@ -22,7 +24,7 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const modalType = useSelector((state) => state.modals.modalType);
+  const modalType = useSelector(getModalType);
 
   useEffect(() => {
     const fetchData = async () => {
