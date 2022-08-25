@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, InputGroup, Button } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 
-import { useAuth, useSocket } from '../hooks/index.js';
+import { useAuth, useChat } from '../hooks/index.js';
 
 import { getCurrentChannelId, getCurrentChannel, getAllMessages } from '../slices/selectors.js';
 
@@ -18,7 +18,7 @@ const Messages = () => {
   const inputRef = useRef();
   const lastMessageRef = useRef();
   const auth = useAuth();
-  const chat = useSocket();
+  const chat = useChat();
   const { t } = useTranslation();
 
   const currentChannelId = useSelector(getCurrentChannelId);

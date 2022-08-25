@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useSocket } from '../../hooks/index.js';
+import { useChat } from '../../hooks/index.js';
 
 import { getAllChannels } from '../../slices/selectors.js';
 
@@ -17,7 +17,7 @@ import { actions as modalsActions } from '../../slices/modalsSlice.js';
 const Add = () => {
   const dispatch = useDispatch();
   const inputEl = useRef();
-  const chat = useSocket();
+  const chat = useChat();
   const { t } = useTranslation();
 
   useEffect(() => {

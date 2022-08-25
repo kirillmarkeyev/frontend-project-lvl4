@@ -1,12 +1,8 @@
-import { io } from 'socket.io-client';
+import store from '../slices/index.js';
+import { actions as messagesActions } from '../slices/messagesSlice.js';
+import { actions as channelsActions } from '../slices/channelsSlice.js';
 
-import store from './slices/index.js';
-import { actions as messagesActions } from './slices/messagesSlice.js';
-import { actions as channelsActions } from './slices/channelsSlice.js';
-
-const initSocket = () => {
-  const socket = io();
-
+const createAPI = (socket) => {
   const addNewMessage = (message) => socket.emit('newMessage', message, (response) => {
     if (response.status !== 'ok') {
       console.log(response.status);
@@ -64,4 +60,4 @@ const initSocket = () => {
   };
 };
 
-export default initSocket;
+export default createAPI;

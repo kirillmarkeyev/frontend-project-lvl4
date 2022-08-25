@@ -2,18 +2,18 @@
 
 import React from 'react';
 
-import { SocketContext } from './index.js';
+import { ApiContext } from './index.js';
 
-const SocketProvider = ({ socket, children }) => {
+const ApiProvider = ({ mainAPI, children }) => {
   const {
     addNewMessage,
     addNewChannel,
     removeChannel,
     renameChannel,
-  } = socket;
+  } = mainAPI;
 
   return (
-    <SocketContext.Provider value={{
+    <ApiContext.Provider value={{
       addNewMessage,
       addNewChannel,
       removeChannel,
@@ -21,8 +21,8 @@ const SocketProvider = ({ socket, children }) => {
     }}
     >
       {children}
-    </SocketContext.Provider>
+    </ApiContext.Provider>
   );
 };
 
-export default SocketProvider;
+export default ApiProvider;

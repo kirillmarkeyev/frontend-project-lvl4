@@ -4,7 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { useSocket } from '../../hooks/index.js';
+import { useChat } from '../../hooks/index.js';
 
 import { getItemId } from '../../slices/selectors.js';
 
@@ -12,7 +12,7 @@ import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
 const Remove = () => {
   const dispatch = useDispatch();
-  const chat = useSocket();
+  const chat = useChat();
   const { t } = useTranslation();
 
   const itemId = useSelector(getItemId);

@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import { useSocket } from '../../hooks/index.js';
+import { useChat } from '../../hooks/index.js';
 
 import { getItemId, getAllChannels } from '../../slices/selectors.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
@@ -15,7 +15,7 @@ import { actions as modalsActions } from '../../slices/modalsSlice.js';
 const Rename = () => {
   const dispatch = useDispatch();
   const inputEl = useRef();
-  const chat = useSocket();
+  const chat = useChat();
   const { t } = useTranslation();
 
   const itemId = useSelector(getItemId);
