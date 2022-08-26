@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -7,40 +6,20 @@ import { useTranslation } from 'react-i18next';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 
-import { useAuth } from '../hooks/index.js';
-import routes from '../routes.js';
 import getModal from './modals/index.js';
-
-import { getModalType } from '../slices/selectors.js';
-
-import { actions as channelsActions } from '../slices/channelsSlice.js';
-import { actions as messagesActions } from '../slices/messagesSlice.js';
+import { isDataFetching, getModalType } from '../slices/selectors.js';
+import { fetchData } from '../slices/channelsSlice.js';
 
 const MainPage = () => {
-  // состояние показа спиннера во время загрузки
-  const [isSpinnerShown, setIsSpinnerShown] = useState(true);
-
-  const auth = useAuth();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const modalType = useSelector(getModalType);
+  const isSpinnerShown = useSelector(isDataFetching);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(routes.dataPath(), { headers: auth.getAuthHeader() });
-
-      const { channels, currentChannelId, messages } = response.data;
-
-      dispatch(channelsActions.addChannels(channels));
-      dispatch(channelsActions.setCurrentChannelId(currentChannelId));
-      dispatch(messagesActions.addMessages(messages));
-
-      setIsSpinnerShown(false);
-    };
-    fetchData();
-  // eslint-disable-next-line
-  }, []);
+    dispatch(fetchData());
+  }, [dispatch]);
 
   const renderModal = (type) => {
     if (!type) {
