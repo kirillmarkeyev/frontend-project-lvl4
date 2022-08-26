@@ -39,6 +39,7 @@ const MainPage = () => {
       setIsSpinnerShown(false);
     };
     fetchData();
+  // eslint-disable-next-line
   }, []);
 
   const renderModal = (type) => {

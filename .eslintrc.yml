@@ -5,7 +5,6 @@ env:
 extends:
   - plugin:react/recommended
   - eslint:recommended
-  - react-app
 parserOptions:
   ecmaFeatures:
     jsx: true
